@@ -1,0 +1,66 @@
+"@import url(\"https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&display=swap\");
+@import url(\"https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap\");
+
+:root {
+  --ou-bg: #fafafa;
+  --ou-surface: #ffffff;
+  --ou-primary: #8a1538;
+  --ou-primary-hover: #70112d;
+  --ou-accent: #f59e0b;
+  --ou-text: #111827;
+  --ou-muted: #4b5563;
+  --ou-border: #e5e7eb;
+}
+
+.App {
+  font-family: \"IBM Plex Sans\", system-ui, sans-serif;
+  color: var(--ou-text);
+}
+
+.font-display {
+  font-family: \"Cabinet Grotesk\", \"IBM Plex Sans\", sans-serif;
+  font-feature-settings: \"ss01\" on;
+}
+
+.font-mono {
+  font-family: \"IBM Plex Mono\", ui-monospace, monospace;
+}
+
+/* Subtle grid texture for hero */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(17, 24, 39, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(17, 24, 39, 0.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+.shadow-crisp {
+  box-shadow:
+    0 1px 0 rgba(17, 24, 39, 0.04),
+    0 8px 24px -12px rgba(17, 24, 39, 0.12);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* New badge pulse */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.85); }
+}
+.pulse-dot {
+  animation: pulse-dot 1.6s ease-in-out infinite;
+}
+
+/* Smooth focus ring */
+*:focus-visible {
+  outline: 2px solid var(--ou-primary);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: #8a1538;
+  color: #fff;
+}
+"
