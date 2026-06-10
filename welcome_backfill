@@ -1,0 +1,41 @@
+@api.post(\"/subscribe\", response_model=Subscriber)
+async def subscribe(req: SubscribeRequest):
+    sub_id = f\"sub-{req.phone}\"
+    doc = {
+        \"id\": sub_id,
+        \"name\": req.name.strip(),
+        \"phone\": req.phone,
+        \"courses\": req.courses,
+        \"created_at\": datetime.now(timezone.utc).isoformat(),
+        \"active\": True,
+    }
+    await SUBS.update_one({\"id\": sub_id}, {\"$set\": doc}, upsert=True)
+    # Backfill: enqueue up to 5 most recent matching notifications so the
+    # subscriber sees value right away (and the mock queue is meaningful).
+    cursor = NOTES.find(
+        {\"courses\": {\"$in\": req.courses}}, {\"_id\": 0}
+    ).sort([(\"date\", -1), (\"scraped_at\", -1)]).limit(5)
+    async for note in cursor:
+        await _enqueue_for_subscribers_single(note, doc)
+    return Subscriber(**doc)
+
+
+async def _enqueue_for_subscribers_single(note: dict, sub: dict) -> None:
+    note_courses = set(note.get(\"courses\", []))
+    matched = next((c for c in sub[\"courses\"] if c in note_courses), sub[\"courses\"][0])
+    item = {
+        \"id\": f\"{note['id']}-{sub['id']}\",
+        \"subscriber_id\": sub[\"id\"],
+        \"subscriber_name\": sub[\"name\"],
+        \"phone\": sub[\"phone\"],
+        \"notification_id\": note[\"id\"],
+        \"title\": note[\"title\"],
+        \"matched_course\": matched,
+        \"message\": (
+            f\"OU Pulse Alert — Hi {sub['name']}, recent update for {matched}: \"
+            f\"\"{note['title']}\" (dated {note['date_raw']}). Read: {note['source_url']}\"
+        ),
+        \"status\": \"sent\",
+        \"created_at\": datetime.now(timezone.utc).isoformat(),
+    }
+    await QUEUE.update_one({\"id\": item[\"id\"]}, {\"$setOnInsert\": item}, upsert=True)
