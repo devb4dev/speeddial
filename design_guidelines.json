@@ -1,0 +1,110 @@
+{
+  "theme": "light",
+  "archetype": "Archetype 4 (Swiss & High-Contrast)",
+  "mood": "Official-yet-modern, trust, speed, academic-but-fresh",
+  "typography": {
+    "heading_font": "Cabinet Grotesk",
+    "body_font": "IBM Plex Sans",
+    "hierarchy": {
+      "h1": "text-4xl sm:text-5xl lg:text-6xl tracking-tight",
+      "h2": "text-2xl sm:text-3xl lg:text-4xl tracking-tight",
+      "h3": "text-xl sm:text-2xl",
+      "body": "text-base leading-relaxed",
+      "labels": "text-xs tracking-[0.2em] uppercase"
+    },
+    "rules": [
+      "No Inter or generic sans for headings.",
+      "Use tracking-tight for large headings.",
+      "Never use center-everything design. Asymmetry creates interest."
+    ]
+  },
+  "colors": {
+    "palette": {
+      "background": "#FAFAFA",
+      "surface": "#FFFFFF",
+      "primary": "#8A1538",
+      "primary_hover": "#70112D",
+      "accent": "#F59E0B",
+      "text_main": "#111827",
+      "text_muted": "#4B5563",
+      "border": "#E5E7EB"
+    },
+    "rules": [
+      "No generic full-screen gradients.",
+      "Never use pure black or gray, tint neutral grays slightly.",
+      "Text over images must meet contrast ratios (use text shadow if needed)."
+    ]
+  },
+  "layout_and_spacing": {
+    "strategy": "Generous Spacing (Tailwind Scale)",
+    "container_padding": "p-6 md:p-12",
+    "grid_system": "Bento Grid (Control Room Grid for dashboard, Tetris for marketing page)",
+    "rules": [
+      "Grid items must be direct children.",
+      "Containers with borders must have internal padding (p-6 or p-8).",
+      "Mobile-First: Always start with grid-cols-1."
+    ]
+  },
+  "components": {
+    "header": {
+      "style": "Glassmorphism (bg-white/80 backdrop-blur-xl border-b border-gray-200/50)",
+      "instructions": "Sticky header. Must contain brand name, navigation links (visible on desktop), and primary CTA. Do not hide all links behind a hamburger menu on desktop."
+    },
+    "hero": {
+      "style": "High visual impact, typography-driven",
+      "instructions": "Use large Cabinet Grotesk headings. Emphasize 'Be first to know'. Include a 'Last updated' indicator showing freshness of feed."
+    },
+    "notifications_list": {
+      "style": "Cardless or subtle 1px border cards. Dense data.",
+      "instructions": "Use pure HTML + Tailwind for structural layouts. Shadcn Table or dense list for notifications. Include 'New' badge in accent color for recent dates. Must allow search/filter by course (B.E, B.Com, MBA, etc.)."
+    },
+    "subscription_form": {
+      "style": "Shadcn Form elements, customized",
+      "instructions": "Use Shadcn components (Input, Select, Checkbox) but strip 'Vercel-look'. Multi-select for courses."
+    },
+    "admin_dashboard": {
+      "style": "Strict grid hierarchy, dense spacing (Control Room Grid)",
+      "instructions": "Use Shadcn components. Show active subscribers, notifications sent, scrape logs, outgoing WhatsApp queue. Use sharp edges or subtle roundness (max 8px border-radius)."
+    }
+  },
+  "visual_enhancers": {
+    "shadows": "Ambient + direct layered shadows. Crisp edges.",
+    "borders": "1px solid #E5E7EB for separation. Add 1px delicate inner stroke for glassmorphism.",
+    "radius": "rounded-none or rounded-md (max 8px) for a structured, institutional feel."
+  },
+  "motion": {
+    "rules": [
+      "Hover states on all interactive elements (explicitly set text color).",
+      "Focus states must have HIGHER contrast than default.",
+      "Use specific transitions (e.g., transition-colors duration-200).",
+      "Respect prefers-reduced-motion."
+    ]
+  },
+  "accessibility": {
+    "rules": [
+      "All interactive elements MUST include data-testid attribute (e.g., data-testid='subscribe-button').",
+      "Maintain minimum 4.5:1 contrast for text.",
+      "HOVER state color must be a lighter hue of ACTIVE state color."
+    ]
+  },
+  "icons": {
+    "library": "lucide-react",
+    "instructions": "Use for UI actions (search, filter, download, external link). Clean and minimal."
+  },
+  "media": {
+    "image_urls": [
+      {
+        "url": "https://images.pexels.com/photos/19193975/pexels-photo-19193975.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "category": "hero_background",
+        "description": "Modern university building with trees casting shadows. Use with a heavy white overlay (bg-white/80) or in a bento grid cell to add academic context without overwhelming the text."
+      }
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Follow the JSON design strictly.",
+    "All logic should be built assuming pure Javascript (.js files), not Typescript.",
+    "Ensure the hero section highlights the 'Real-time WhatsApp notifications' value proposition.",
+    "Implement the scraping logic via a background worker or API endpoint that updates the feed.",
+    "Use data-testid for all inputs and buttons."
+  ]
+}
